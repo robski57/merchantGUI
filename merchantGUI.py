@@ -81,14 +81,17 @@ class MerchantApp(Frame):
         print("Todays total from the great city of",loc,"$",amount,"for a",item)
 
     def _save(self):
-        
+
         conn = sqlite3.connect("info.db")
         c = conn.cursor()
         c.execute("CREATE TABLE IF NOT EXISTS inve( ItemN text, Location text, Price real, Amount real, Total real, Qyt real, RestockItm text, StateSells real, GameState text, ClothingNam text, ClothingP real, FoodN text, FoodP real, Programs real, Buttons  text, ButtonSold real, Staff text)")
-        
-        c.executemany("INSERT INTO inve( ItemN, Location, Price, Amount, Total, Qyt, RestockItm, StateSells, GameState, ClothingNam, ClothingP, FoodN, FoodP, Programs, Buttons, ButtonSold, Staff ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", (self._purchese))
-        
-        for row in c.execute("SELECT ItemN, Location, Price, Amount, Total from self._purchese"):
+
+        print(self._purchese)
+        #c.execute("INSERT INTO inve( ItemN, Location, Price, Amount, Total, Qyt, RestockItm, StateSells, GameState, ClothingNam, ClothingP, FoodN, FoodP, Programs, Buttons, ButtonSold, Staff ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )", (self._purchese))
+        c.execute("INSERT INTO inve( ItemN, Location, Price, Amount, Total) VALUES ( ?, ?, ?, ?, ? )", (self._purchese))
+
+        for row in c.execute("SELECT ItemN, Location, Price, Amount, Total from inve"):
+            print('here is a row from the database')
             print(row)
         conn.commit()
 
